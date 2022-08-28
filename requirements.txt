@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+m3u8
+aiohttp
+pycryptodome
+tenacity
