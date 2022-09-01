@@ -25,7 +25,8 @@ class FourgTV():
         self.api2 = "https://api2.4gtv.tv"
         self.headers={
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0",
-            "referer": "https://www.4gtv.tv"
+            "referer": "https://www.4gtv.tv",
+            "cookie": f"4fourTV={conf['login']['4fourgtv']}"
         }
         self.proxy = conf["conn"]["proxy"]
         self.proxys = {
@@ -42,8 +43,7 @@ class FourgTV():
         value = json.dumps(body).encode("utf8")
         cipher = AES.new(self.key, AES.MODE_CBC, self.iv)
         ct_bytes = cipher.encrypt(pad(value, AES.block_size))
-        ct = b64encode(ct_bytes).decode('utf8')
-        return ct
+        return b64encode(ct_bytes).decode('utf8')
 
     def url3_decrypt(self, data: str) -> bytes:
         ct_bytes = b64decode(data.encode("utf8"))
@@ -90,7 +90,7 @@ class FourgTV():
             if "4gtvfree-cds" in url:
                 url = url.replace("4gtvfree-cds", "4gtv-cds")
             elif "4gtvfreepc-cds" in url:
-                url = url.replace("4gtvfreepc-cds", "4gtvpc-cds")
+                url = url.replace("4gtvfreepc", "4gtvpc")
                 url = url.replace("4gtv-live-mid", "4gtv-live-high")
             segment.uri = url
         return stream
